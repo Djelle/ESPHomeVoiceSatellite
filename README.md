@@ -11,7 +11,7 @@ I used a cheap (and faulty) bluetooth speaker for this project. Which happened t
 - Next: Config selection increase
 - Prev: Config selection decrease
 
-I added an addressable LED-strip around it for state feedback:
+I added an addressable LED-strip around it for state feedback. And made some custom light effects that can support my LED-brightness:
 - White: "Not Ready" Not connected to HA.
 - Orange: "Muted" Wake word disabled.
 - Green/Teal: "Idle" Wake word enabled.
