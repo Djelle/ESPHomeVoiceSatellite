@@ -1,4 +1,4 @@
-YAML code for ESP32. To make a unit with microphone and speaker to use with Home Assistant: Voice Assistant.
+YAML code for ESP32. For making a unit with microphone and speaker to use with Home Assistant: Voice Assistant.
 It also have support for adressable LED-strip. And 5 buttons for interactions.
 It has audio sounds for key-click and "Listening" start/end.
 
