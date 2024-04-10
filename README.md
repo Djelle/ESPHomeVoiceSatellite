@@ -1,8 +1,8 @@
 YAML code for ESP32. For making a unit with microphone and speaker to use with Home Assistant: Voice Assistant.
-It also have support for adressable LED-strip. And 5 buttons for interactions.
-It has audio sounds for key-click and "Listening" start/end.
 
-A better YAML programmer could probably make this code smarter and more compact. But it is working ☺
+It has support for adressable LED-strip. And 5 buttons for interactions. It has audio sounds for key-click and "Listening" start/end.
+
+A better YAML programmer could probably make this code smarter and more compact. But it is working :)
 
 ## Buttons
 I used a cheap (and faulty) bluetooth speaker for this project. Which happened to have 5 buttons:
@@ -13,7 +13,7 @@ I used a cheap (and faulty) bluetooth speaker for this project. Which happened t
 - ➖ Prev: Config selection decrease
 
 ## LED-strip
-I added an addressable LED-strip around it for state feedback. And made some custom light effects that can support my LED-brightness:
+I added an addressable LED-strip around it for state feedback. And made some custom light effects that can support my LED-brightness setting:
 - White: "Not Ready" Not connected to HA.
 - Orange: "Muted" Wake word disabled.
 - Green: "Idle" Wake word enabled.
