@@ -2,7 +2,7 @@ YAML code for ESP32. For making a unit with microphone and speaker to use with H
 
 It has support for adressable LED-strip. And 5 buttons for interactions. It has audio sounds for key-click and "Listening" start/end.
 
-A better YAML programmer could probably make this code smarter and more compact. But it is working :)
+A better YAML programmer could probably make this code smarter and more compact. But it is working as it should :)
 
 ## Buttons
 I used a cheap (and faulty) bluetooth speaker for this project. Which happened to have 5 buttons:
