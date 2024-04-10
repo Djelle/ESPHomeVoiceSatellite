@@ -30,6 +30,8 @@ My LED-Strip is RGBW. I do not use the White channel though.
 
 I hope that it will be possible to send Text-To-Speach to the speaker in the future. Which could have many uses. Like annoucing which config-option is selected.
 
+I experimented with continous listening (no wake word). But I found it very unreliable as it is. So I removed that part of the code. Can re-make it if this option become more valid.
+
 ## ❗ NOTICE:
 - When connecting the physical modules together: Make sure the I2S connections are as short as posible.
 - The amplifier module can use 2A of power. So preferably use a power supply that can output that.
