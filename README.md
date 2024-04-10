@@ -16,7 +16,7 @@ I used a cheap (and faulty) bluetooth speaker for this project. Which happened t
 I added an addressable LED-strip around it for state feedback. And made some custom light effects that can support my LED-brightness:
 - White: "Not Ready" Not connected to HA.
 - Orange: "Muted" Wake word disabled.
-- Green/Teal: "Idle" Wake word enabled.
+- Green: "Idle" Wake word enabled.
 - Blue: "Listening" Listening for command.
 - Pink: "Thinking" Waiting for interpretation of speach.
 - Yellow: "Replying" Talking.
