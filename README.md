@@ -25,5 +25,5 @@ I hope that it will be possible to send Text-To-Speach to the speaker in the fut
 
 ## NOTICES:
 - When connecting the physical modules together: Make sure the I2S connections are as short as posible.
-The amplifier module can use 2A of power. So use a power supply that can output that.
+- The amplifier module can use 2A of power. So preferably use a power supply that can output that.
 - If you use a LED-strip with many diodes, don't feed it power though the ESP32. But connect the strip and the ESP32 through a common power plug like an USB-C or a barrel plug.
