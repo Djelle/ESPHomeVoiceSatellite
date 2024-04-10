@@ -5,7 +5,7 @@ It has support for adressable LED-strip. And 5 buttons for interactions. It has 
 A better YAML programmer could probably make this code smarter and more compact. But it is working as it should :)
 
 ## Buttons
-I used a cheap (and faulty) bluetooth speaker for this project. Which happened to have 5 buttons:
+I used a cheap (and faulty) bluetooth speaker for this project. Which happened to have 5 buttons. Which I utilised like this:
 - ⏻ Power: Wake Word On/Of
 - ✆ Call: Push To Listen
 - ⏯ Play/Pause: Change config selection. E.g. Volume, LED Brightness. (Future maybe: Mic-volume, Noise suppression, Gain.) Volume is not supported yet. But will probably be in the future.
