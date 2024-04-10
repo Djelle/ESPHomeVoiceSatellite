@@ -18,6 +18,7 @@ I added an addressable LED-strip around it for state feedback:
 - Blue: "Listening" Listening for command.
 - Pink: "Thinking" Waiting for interpretation of speach.
 - Yellow: "Replying" Talking.
+
 State is also exposed in HA. So automations can be activated by it.
 
 I hope that it will be possible to send Text-To-Speach to the speaker in the future. Which could have many uses. Like annoucing which config-option is selected.
