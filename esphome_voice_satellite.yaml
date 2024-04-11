@@ -1,8 +1,8 @@
 # = PINS USED =
 # GPIO4  : LED Strip
-# GPIO12 : MAX98357A / BCLK
+# GPIO14 : MAX98357A / BCLK
 # GPIO13 : MAX98357A / LRC
-# GPIO14 : MAX98357A / DIN
+# GPIO27 : MAX98357A / DIN
 # GPIO18 : Button Power (Wake Word On/Of)
 # GPIO19 : Button Next (Config selection Increse)
 # GPIO21 : Button Play/Pause (Change config selection. E.g. Volume, LED Brightness.)(Future maybe: Mic-volume, Noise suppression, Gain.)
@@ -71,6 +71,8 @@ esp32:
   board: esp32dev
   framework:
     type: arduino
+#    type: esp-idf
+#    version: recommended
 
 # Enable logging
 logger:
@@ -181,7 +183,7 @@ i2s_audio:
     i2s_bclk_pin: GPIO25 # SCK
   - id: i2s_out
     i2s_lrclk_pin: GPIO13 # LRC
-    i2s_bclk_pin: GPIO12 # BCLK
+    i2s_bclk_pin: GPIO14 # BCLK
 
 microphone: # INMP441
   - platform: i2s_audio
@@ -197,7 +199,7 @@ speaker: # MAX98357A
     i2s_audio_id: i2s_out
     id: external_speaker
     dac_type: external
-    i2s_dout_pin: GPIO14 # DIN
+    i2s_dout_pin: GPIO27 # DIN
     mode: mono
 
 light:
@@ -507,6 +509,10 @@ binary_sensor:
   filters:
     - delayed_on: 10ms
   on_press:
+#    - text_sensor.template.publish: #=============================================================================== TEST ===
+#        id: va_state
+#        state: "${error_phase}"
+#  on_click: 
     - if:
         condition:
           - voice_assistant.is_running
@@ -547,7 +553,7 @@ binary_sensor:
 script:
   - id: state_set_led
     then:
-      - delay: 200ms # To prevent light.control from miss-writing LED-strip while VA is returning error: no_wake_word.
+      - delay: 200ms # To prevent light.control from miss-writing LED-strip while VA is working hard.
       - if:
           condition:
             - text_sensor.state:
