@@ -4,7 +4,7 @@ It has support for adressable LED-strip. And 5 buttons for interactions. It has 
 
 A better YAML programmer could probably make this code smarter and more compact. But it is working as it should :)
 
-### Buttons
+## Buttons
 I used a cheap (and faulty) bluetooth speaker for this project. Which happened to have 5 buttons. Which I utilised like this:
 - ⏻ Power: Wake Word On/Of
 - ✆ Call: Push To Listen
@@ -12,7 +12,7 @@ I used a cheap (and faulty) bluetooth speaker for this project. Which happened t
 - ➕ Next: Config selection increase
 - ➖ Prev: Config selection decrease
 
-### LED-strip
+## LED-strip
 I added an addressable LED-strip around it for state feedback. And made some custom light effects that can support my LED-brightness setting:
 - White: "Not Ready" Not connected to HA.
 - Orange: "Muted" Wake word disabled.
@@ -26,7 +26,7 @@ State is also exposed in Home Assistant. So automations can be activated by it.
 
 My LED-Strip is RGBW. I do not use the White channel though.
 
-### Future
+## Future
 
 I hope that it will be possible to send Text-To-Speach to the speaker in the future. Which could have many uses. Like annoucing which config-option is selected.
 
@@ -37,5 +37,5 @@ I experimented with continous listening (no wake word). But I found it very unre
 - The amplifier module can use 2A of power. So preferably use a power supply that can output that.
 - If you use a LED-strip with many diodes, don't feed it power though the ESP32. But connect the strip and the ESP32 through a common power plug like an USB-C or a barrel plug.
 
-### Photos of the unit I made
-![01](/docs/01.jpg)
+## Photos of the unit I made
+![01](/docs/01.jpg)![02](/docs/02.jpg)![03](/docs/03.jpg)![04](/docs/04.jpg)
