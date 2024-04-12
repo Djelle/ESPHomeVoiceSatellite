@@ -36,7 +36,7 @@ I experimented with continous listening (no wake word). But I didn't find it esp
 
 > [!TIP]
 > - When connecting the physical modules together: Make sure the I2S connections are as short as possible.
-> - The amplifier module can use 2 Amp of power. Though I assume that is only if gain it set to max. Gain here, is not refering the mic gain in the code.
+> - The amplifier module can use 2 Amp of power. Though I assume that is only if gain it set to max. (Gain here, is not refering the mic gain in the code.)
 > - If you use a LED-strip with many diodes, don't feed it power though the ESP32. But connect the strip and the ESP32 through a common power plug like an USB-C or a barrel plug.
 
 ## Photos of the unit I made
