@@ -39,7 +39,10 @@ I experimented with continous listening (no wake word). But I found it very unre
 
 ## Photos of the unit I made
 ![01](/docs/01.jpg)
+There was just the perfect room for the elektronics in a corner. I extended the screw 'pins' by 5 mm. So that there was room for a 6 mm latex tube (originally for aquariums) around all the edge. To difuse the led-strip.
 ![02](/docs/02.jpg)
+Idle green. Which is more like teal.
 ![03](/docs/03.jpg)
+Brin-colored scan animation while thinking.
 ![04](/docs/04.jpg)
 Example of LED colors while setting volume: Blue indicate it's volumen. White fills up the rest of the space acording to procentage set.
