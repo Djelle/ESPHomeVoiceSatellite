@@ -8,9 +8,11 @@ I have addressed the issue with Voice Assistant sometime locking up. It happens 
 I used a cheap (and faulty) bluetooth speaker for this project. Which happened to have 5 buttons. Which I utilised like this:
 - ⏻ Power: Wake Word On/Of
 - ✆ Call: Push To Listen
-- ⏯ Play/Pause: Change config selection. E.g. Volume, LED Brightness. (Future maybe: Mic-volume, Noise suppression, Gain). #CC0000 Notice that Volume is not supported by Voice Assistant as of now. But probably will be in the future.
+- ⏯ Play/Pause: Change config selection. E.g. Volume, LED Brightness. (Future maybe: Mic-volume, Noise suppression, Gain).
 - ➕ Next: Config selection increase
 - ➖ Prev: Config selection decrease
+> [!NOTE]
+> Notice that Volume is not supported by Voice Assistant as of now. But probably will be in the future.
 
 ## LED-strip
 I added an addressable LED-strip around it for state feedback. And made some custom light effects that can support my LED-brightness setting:
