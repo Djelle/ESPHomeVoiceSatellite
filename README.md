@@ -38,4 +38,8 @@ I experimented with continous listening (no wake word). But I found it very unre
 - If you use a LED-strip with many diodes, don't feed it power though the ESP32. But connect the strip and the ESP32 through a common power plug like an USB-C or a barrel plug.
 
 ## Photos of the unit I made
-![01](/docs/01.jpg)![02](/docs/02.jpg)![03](/docs/03.jpg)![04](/docs/04.jpg)
+![01](/docs/01.jpg)
+![02](/docs/02.jpg)
+![03](/docs/03.jpg)
+![04](/docs/04.jpg)
+Example of LED colors while setting volume: Blue indicate it's volumen. White fills up the rest of the space acording to procentage set.
