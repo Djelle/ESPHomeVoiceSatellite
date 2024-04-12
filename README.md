@@ -8,7 +8,7 @@ I have addressed the issue with Voice Assistant sometime locking up. It happens 
 I used a cheap (and faulty) bluetooth speaker for this project. Which happened to have 5 buttons. Which I utilised like this:
 - ⏻ Power: Wake Word On/Of
 - ✆ Call: Push To Listen
-- ⏯ Play/Pause: Change config selection. E.g. Volume, LED Brightness. (Future maybe: Mic-volume, Noise suppression, Gain.) Volume is not supported yet. But will probably be in the future.
+- ⏯ Play/Pause: Change config selection. E.g. Volume, LED Brightness. (Future maybe: Mic-volume, Noise suppression, Gain). `#CC0000`Notice that Volume is not supported by Voice Assistant as of now. But probably will be in the future.
 - ➕ Next: Config selection increase
 - ➖ Prev: Config selection decrease
 
@@ -32,7 +32,7 @@ I hope that it will be possible to send Text-To-Speach to the speaker in the fut
 
 I experimented with continous listening (no wake word). But I didn't find it especially useful. So I removed that part of the code. Can re-make it if this option become more valid.
 
-> [!NOTE]
+> [!TIP]
 > - When connecting the physical modules together: Make sure the I2S connections are as short as possible.
 > - The amplifier module can use 2 Amp of power. Though I assume that is only if gain it set to max. Gain here, is not refering the mic gain in the code.
 > - If you use a LED-strip with many diodes, don't feed it power though the ESP32. But connect the strip and the ESP32 through a common power plug like an USB-C or a barrel plug.
