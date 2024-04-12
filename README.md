@@ -32,10 +32,10 @@ I hope that it will be possible to send Text-To-Speach to the speaker in the fut
 
 I experimented with continous listening (no wake word). But I found it very unreliable as it is. So I removed that part of the code. Can re-make it if this option become more valid.
 
-## ❗ NOTICE:
-- When connecting the physical modules together: Make sure the I2S connections are as short as posible.
-- The amplifier module can use 2A of power. So preferably use a power supply that can output that.
-- If you use a LED-strip with many diodes, don't feed it power though the ESP32. But connect the strip and the ESP32 through a common power plug like an USB-C or a barrel plug.
+> [!NOTE]
+> When connecting the physical modules together: Make sure the I2S connections are as short as posible.
+> The amplifier module can use 2A of power. So preferably use a power supply that can output that.
+> If you use a LED-strip with many diodes, don't feed it power though the ESP32. But connect the strip and the ESP32 through a common power plug like an USB-C or a barrel plug.
 
 ## Photos of the unit I made
 ![01](/docs/01.jpg)
