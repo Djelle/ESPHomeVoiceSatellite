@@ -38,4 +38,4 @@ I experimented with continous listening (no wake word). But I found it very unre
 - If you use a LED-strip with many diodes, don't feed it power though the ESP32. But connect the strip and the ESP32 through a common power plug like an USB-C or a barrel plug.
 
 ### Photos of the unit I made
-![](https://raw.githubusercontent.com/Djelle/ESPHomeVoiceSattelite/main/docs/01.jpg)
+![01](assets/docs/ESPHomeVoiceSattelite/main/docs/01.jpg)
