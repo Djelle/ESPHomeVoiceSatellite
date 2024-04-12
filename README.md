@@ -6,6 +6,9 @@ YAML code for ESPHome on a ESP32. For making a unit with microphone and speaker 
 
 I have addressed the issue with Voice Assistant sometime locking up. It happens when the recorded sound has no recognisable speach in it. And thus it doesn't feel the need to reply. Which would normally be followed by an on_stt_vad_end event. Instead it send out an error: "stt-no-text-recognized".
 
+> [!NOTE]
+> Notice that Volume is not supported by Voice Assistant as of now. But probably will be in the future.
+
 ## Buttons
 I used a cheap (and faulty) bluetooth speaker for this project. Which happened to have 5 buttons. Which I utilised like this:
 - ⏻ Power: Wake Word On/Of
@@ -13,8 +16,6 @@ I used a cheap (and faulty) bluetooth speaker for this project. Which happened t
 - ⏯ Play/Pause: Change config selection. E.g. Volume, LED Brightness. (Future maybe: Mic-volume, Noise suppression, Gain).
 - ➕ Next: Config selection increase
 - ➖ Prev: Config selection decrease
-> [!NOTE]
-> Notice that Volume is not supported by Voice Assistant as of now. But probably will be in the future.
 
 ## LED-strip
 I added an addressable LED-strip around it for state feedback. And made some custom light effects that can support my LED-brightness setting:
