@@ -13,7 +13,7 @@
 # GPIO33 : INMP441 / SD
 
 substitutions:
-  name: esphome_voice_satellite
+  name: ESPHomeVoiceSattelite
   friendly_name: 'Voice Satellite'
   error_phase: 'Error'
   idle_phase: 'Idle'
