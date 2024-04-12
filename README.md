@@ -1,4 +1,4 @@
-YAML code for ESP32. For making a unit with microphone and speaker to use with Home Assistant: Voice Assistant.
+YAML code for ESPHome on a ESP32. For making a unit with microphone and speaker to use with Home Assistant: Voice Assistant.
 
 It has support for addressable LED-strip. And 5 buttons for interactions. It has audio sounds for key-click and "Listening" start/end.
 
@@ -30,7 +30,7 @@ My LED-Strip is RGBW. I do not use the White channel though.
 
 I hope that it will be possible to send Text-To-Speach to the speaker in the future. Which could have many uses. Like annoucing which config-option is selected.
 
-I experimented with continous listening (no wake word). But I found it very unreliable as it is. So I removed that part of the code. Can re-make it if this option become more valid.
+I experimented with continous listening (no wake word). But I didn't find it especially useful. So I removed that part of the code. Can re-make it if this option become more valid.
 
 > [!NOTE]
 > - When connecting the physical modules together: Make sure the I2S connections are as short as possible.
