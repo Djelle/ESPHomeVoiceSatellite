@@ -10,7 +10,7 @@ I have addressed the issue with programs like this sometime locks up. It happens
 > Notice that Volume is not supported by Voice Assistant as of now. But probably will be in the future.
 
 ## Buttons
-I used a cheap (and faulty) bluetooth speaker for this project. Which happened to have 5 buttons. Which I utilised like this:
+I used a cheap (and faulty) bluetooth speaker for this project. Which happened to have 5 buttons. Though you can of course choose to use less than 5 or none.
 - ⏻ Power: Wake Word On/Of
 - ✆ Call: Push To Listen
 - ⏯ Play/Pause: Change config selection. E.g. Volume, LED Brightness. (Future maybe: Mic-volume, Noise suppression, Gain).
@@ -18,14 +18,14 @@ I used a cheap (and faulty) bluetooth speaker for this project. Which happened t
 - ➖ Prev: Config selection decrease
 
 ## LED-strip
-I added an addressable LED-strip around it for state feedback. And made some custom light effects that can support my LED-brightness setting:
+I added an addressable LED-strip around it for state feedback. And made some custom light effects that can support my LED-brightness setting. Non-adressable and single LED can be used too.
 - White: "Not Ready" Not connected to HA.
 - Orange: "Muted" Wake word disabled.
 - Green: "Idle" Wake word enabled.
 - Blue: "Listening" Listening for command.
 - Pink: "Thinking" Waiting for interpretation of speach.
 - Yellow: "Replying" Talking.
-- Red: "Error" Is not used. As I am unable to read any error messages (They are gibberish).
+- Red: "Error" Is not used. As I am unaware of any errors that would need it.
 
 State is also exposed in Home Assistant. So automations can be activated by it.
 
