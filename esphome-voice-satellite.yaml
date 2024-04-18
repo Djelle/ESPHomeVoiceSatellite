@@ -75,9 +75,9 @@ esphome:
 esp32:
   board: esp32dev
   framework:
-    type: arduino
-#    type: esp-idf
-#    version: recommended
+    type: esp-idf
+    version: recommended
+#    type: arduino
 
 # Enable logging
 logger:
@@ -141,27 +141,21 @@ voice_assistant:
   on_error:
     - if:
         condition:
-          - text_sensor.state: # Error is probably: stt-no-text-recognized
-              id: va_state
-              state: "${thinking_phase}"
+          and:
+            - text_sensor.state:
+                id: va_state
+                state: "${thinking_phase}"
+            - lambda: 'return (code == "stt-no-text-recognized");' # Error-code-text MUST be in double-quotes.
         then:
           - script.execute: stop_listening
 
 #    - logger.log:
 #        level: WARN
-#        format: "Err.code: %d Msg: %s"
-#        args: [ 'code', 'message' ] // Returns gibberish.
+#        format: "Err.code: %s Msg: %s"
+#        args: [ code.c_str(), message.c_str() ]
 #
 # [E][voice_assistant:653]: Error: no_wake_word - No wake word detected
-#   [W][main:709]: Err.code: 1073423644 Msg: p\xfd\xfd?
-#   [W][main:709]: Err.code: 1073423644 Msg: \xc5\xfd?
-#   [W][main:709]: Err.code: 1073423644 Msg: 
-#   [W][main:709]: Err.code: 1073423644 Msg: \xc8\xea\xfd?
-#   [W][main:709]: Err.code: 1073423644 Msg: \xd4\xfb\xfd?
 # [E][voice_assistant:653]: Error: stt-no-text-recognized - No text recognized
-#   [W][main:709]: Err.code: 1073423644 Msg: @\xc9\xfd?
-#   [W][main:709]: Err.code: 1073423644 Msg: \xf8\xc6\xfd?
-#   [W][main:709]: Err.code: 1073423644 Msg: p\xc5\xfd?
 
   on_client_connected:
     - if:
@@ -222,7 +216,7 @@ light:
     default_transition_length: 0s
     effects:
       - lambda:
-          name: 'flicker_effect'
+          name: 'replying_effect'
           update_interval: 300ms
           lambda: |-
             static int step = 0;
@@ -236,7 +230,7 @@ light:
             if (step > 1)
             step = 0;
       - lambda:
-          name: 'strobe_effect'
+          name: 'error_effect'
           update_interval: 500ms
           lambda: |-
             static int step = 0;
@@ -264,14 +258,27 @@ light:
             step += 1;
             if (step > 10)
             step = -10;
+      - lambda:
+          name: 'listening_effect'
+          update_interval: 30ms
+          lambda: |-
+            static float step = 16;
+            static esphome::Color rgb = Color(0,1,1);
+            auto call = id(led).turn_on();
+            call.set_rgb(rgb[0],rgb[1]*abs(step)*0.06,rgb[2]);
+            call.set_transition_length(30);
+            call.perform();
+            step += 1;
+            if (step > 16)
+            step = -16;
       - addressable_lambda:
-          name: 'scan_effect'
+          name: 'adr_thinking_effect'
           update_interval: 30ms
           lambda: |-
             static int step = 0;
-            int size = it.size();
-            esphome::Color rgb = Color(255,147,211);
-            esphome::Color fade = Color(16,32,16);
+            static int size = it.size();
+            static esphome::Color rgb = Color(255,147,211);
+            static esphome::Color fade = Color(16,32,16);
             if(initial_run) {
             step = 0;
             it.all() = Color(0,0,0);
@@ -294,8 +301,7 @@ light:
             it.shift_left(1);
             }
             step += 1;
-            if (step > (size-5)*2)
-            step = 0;
+            if (step > (size-5)*2) { step = 0; }
 
     on_turn_on:
       - script.execute: state_set_led
@@ -528,7 +534,11 @@ binary_sensor:
       pulldown: true
   filters:
     - delayed_on: 10ms
-  on_click: 
+  on_press:
+#    - text_sensor.template.publish: #=============================================================================== TEST ===
+#        id: va_state
+#        state: "${listening_phase}"
+#  on_click: 
     - if:
         condition:
           - voice_assistant.is_running
@@ -597,7 +607,7 @@ script:
                 red: 0.0
                 green: 1.0
                 blue: 1.0
-                effect: breathing_effect
+                effect: listening_effect
       - if:
           condition:
             - text_sensor.state:
@@ -611,7 +621,8 @@ script:
                 red: 1.0
                 green: 0.0
                 blue: 0.8
-                effect: scan_effect
+                effect: adr_thinking_effect
+                #effect: breathing_effect # for non-adressable led-strip
       - if:
           condition:
             - text_sensor.state:
@@ -625,7 +636,7 @@ script:
                 red: 1.0
                 green: 1.0
                 blue: 0.0
-                effect: flicker_effect
+                effect: replying_effect
       - if:
           condition:
             - text_sensor.state:
@@ -639,7 +650,7 @@ script:
                 red: 1.0
                 green: 0.0
                 blue: 0.0
-                effect: strobe_effect
+                effect: error_effect
       - if:
           condition:
             - text_sensor.state:
