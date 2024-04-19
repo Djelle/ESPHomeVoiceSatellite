@@ -4,7 +4,7 @@ YAML code for ESPHome on a ESP32. For making a unit with microphone and speaker 
 - 5 buttons for interactions.
 - It has audio sounds for key-click and "Listening" start/end.
 
-I have addressed the issue with programs like this sometime locks up. It happens when the recorded sound has no recognisable speach in it. And thus it doesn't feel the need to reply. Which would normally be followed by an on_stt_vad_end event. Instead it send out an error: "stt-no-text-recognized".
+I have addressed the issue with voice assistant programs like this sometime locks up. It happens when the recorded sound has no recognisable speach in it. And thus it doesn't feel the need to reply. Which would normally be followed by an on_stt_vad_end event. Instead it send out an error: "stt-no-text-recognized".
 
 > [!NOTE]
 > Notice that Volume is not supported by Voice Assistant as of now. But probably will be in the future.
