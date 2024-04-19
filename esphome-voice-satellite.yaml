@@ -845,7 +845,7 @@ script:
             or:
               - text_sensor.state:
                   id: va_state
-                  state: ${listening_phase} );"
+                  state: ${replying_phase} );"
               - speaker.is_playing
 #                  id: external_speaker
           else:
