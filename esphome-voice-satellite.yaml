@@ -98,7 +98,7 @@ wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
 
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
+# Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: ${friendly_name}
     password: !secret wifi_password
@@ -216,6 +216,63 @@ light:
     default_transition_length: 0s
     effects:
       - lambda:
+          name: 'listening_effect'
+          update_interval: 30ms
+          lambda: |-
+            static float step = 16;
+            static esphome::Color rgb = Color(0,1,1);
+            auto call = id(led).turn_on();
+            call.set_rgb(rgb[0],rgb[1]*abs(step)*0.06,rgb[2]);
+            call.set_transition_length(30);
+            call.perform();
+            step += 1;
+            if (step > 16)
+            step = -16;
+      - lambda:
+          name: 'thinking_effect'
+          update_interval: 50ms
+          lambda: |-
+            static float step = -10;
+            auto call = id(led).turn_on();
+            call.set_brightness( id(led_brightness_pf) * ((abs(step)*0.03)+0.7) );
+            call.perform();
+            step += 1;
+            if (step > 10)
+            step = -10;
+      - addressable_lambda:
+          name: 'adr_thinking_effect'
+          update_interval: 30ms
+          lambda: |-
+            static int step = 0;
+            static int size = it.size();
+            static int width = size/7;
+            static esphome::Color rgb = Color(255,147,211);
+            static esphome::Color fade = Color(16,32,16);
+            if(initial_run) {
+            step = 0;
+            it.all() = Color(0,0,0);
+            if( width < 1 ) width=1;
+            return;
+            }
+            if(step < size-width) {
+            if( step==0 ) {
+            it.all() = it[size-1].get();
+            it.range(1, width+1) = rgb;
+            }
+            it[0] = Color(it[1].get())-fade;
+            it.shift_right(1);
+            }
+            else {
+            if( step==size-width ) {
+            it.all() = it[0].get();
+            it.range(size-width-1, size-1) = rgb;
+            }
+            it[size-1] = Color(it[size-2].get())-fade;
+            it.shift_left(1);
+            }
+            step += 1;
+            if (step > (size-width)*2) { step = 0; }
+      - lambda:
           name: 'replying_effect'
           update_interval: 300ms
           lambda: |-
@@ -229,6 +286,27 @@ light:
             step += 1;
             if (step > 1)
             step = 0;
+      - addressable_lambda:
+          name: 'adr_replying_effect'
+          update_interval: 100ms
+          lambda: |-
+            static int size = it.size();
+            static int nr = size/5;
+            int nrlist[nr];
+            static esphome::Color rgb = Color(255,255,0);
+            static esphome::Color fade = Color(16,16,0);
+            if(initial_run) {
+            if( nr < 1 ) nr=1;
+            it.all() = Color(16,16,0);
+            return;
+            }
+            for( int i=0; i < size; i++ ) {
+            it[i] = Color(it[i].get())-fade;;
+            }
+            for( int i=0; i < nr; i++ ) {
+            nrlist[i] = ((float)rand()/RAND_MAX)*size;
+            it[nrlist[i]] = rgb;
+            }
       - lambda:
           name: 'error_effect'
           update_interval: 500ms
@@ -247,61 +325,6 @@ light:
             step += 1;
             if (step > 1)
             step = 0;
-      - lambda:
-          name: 'breathing_effect'
-          update_interval: 50ms
-          lambda: |-
-            static float step = -10;
-            auto call = id(led).turn_on();
-            call.set_brightness( id(led_brightness_pf) * ((abs(step)*0.03)+0.7) );
-            call.perform();
-            step += 1;
-            if (step > 10)
-            step = -10;
-      - lambda:
-          name: 'listening_effect'
-          update_interval: 30ms
-          lambda: |-
-            static float step = 16;
-            static esphome::Color rgb = Color(0,1,1);
-            auto call = id(led).turn_on();
-            call.set_rgb(rgb[0],rgb[1]*abs(step)*0.06,rgb[2]);
-            call.set_transition_length(30);
-            call.perform();
-            step += 1;
-            if (step > 16)
-            step = -16;
-      - addressable_lambda:
-          name: 'adr_thinking_effect'
-          update_interval: 30ms
-          lambda: |-
-            static int step = 0;
-            static int size = it.size();
-            static esphome::Color rgb = Color(255,147,211);
-            static esphome::Color fade = Color(16,32,16);
-            if(initial_run) {
-            step = 0;
-            it.all() = Color(0,0,0);
-            return;
-            }
-            if(step < size-5) {
-            if( step==0 ) {
-            it.all() = it[size-1].get();
-            it.range(1, 6) = rgb;
-            }
-            it[0] = Color(it[1].get())-fade;
-            it.shift_right(1);
-            }
-            else {
-            if( step==size-5 ) {
-            it.all() = it[0].get();
-            it.range(size-6, size-1) = rgb;
-            }
-            it[size-1] = Color(it[size-2].get())-fade;
-            it.shift_left(1);
-            }
-            step += 1;
-            if (step > (size-5)*2) { step = 0; }
 
     on_turn_on:
       - script.execute: state_set_led
@@ -535,10 +558,6 @@ binary_sensor:
   filters:
     - delayed_on: 10ms
   on_press:
-#    - text_sensor.template.publish: #=============================================================================== TEST ===
-#        id: va_state
-#        state: "${listening_phase}"
-#  on_click: 
     - if:
         condition:
           - voice_assistant.is_running
@@ -622,7 +641,7 @@ script:
                 green: 0.0
                 blue: 0.8
                 effect: adr_thinking_effect
-                #effect: breathing_effect # for non-adressable led-strip
+                #effect: thinking_effect # for non-adressable led-strip
       - if:
           condition:
             - text_sensor.state:
@@ -636,7 +655,8 @@ script:
                 red: 1.0
                 green: 1.0
                 blue: 0.0
-                effect: replying_effect
+                effect: adr_replying_effect
+                #effect: replying_effect # for non-adressable led-strip
       - if:
           condition:
             - text_sensor.state:
