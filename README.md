@@ -37,7 +37,7 @@ My LED-Strip is RGBW. I do not use the White channel though.
 
 I hope that it will be possible to send Text-To-Speach to the speaker in the future. Which could have many uses. Like annoucing which config-option is selected.
 
-I experimented with continous listening (no wake word). But I didn't find it especially useful. So I removed that part of the code. Can re-make it if this option become more valid.
+I experimented with continous listening (no wake word). Which I didn't find especially useful. So I removed that code, as I didn't feel like debugging it right now. Might add it again later.
 
 > [!TIP]
 > - When connecting the physical modules together: Make sure the I2S connections are as short as possible.
