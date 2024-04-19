@@ -20,7 +20,7 @@ I used a cheap (and faulty) bluetooth speaker for this project. Which happened t
 ## LED-strip
 I added an addressable LED-strip around it for state feedback. And made some custom light effects that can support my LED-brightness setting.
 
-Non-adressable and single LED can be used too. By deleting 'adr_' from two of the states. Search for 'effect: adr_'.
+Non-adressable and single LED can be used too. By deleting 'adr_' from two of the states. Search for 'effect: adr_' in the code.
 - White: "Not Ready" Not connected to HA.
 - Orange: "Muted" Wake word disabled.
 - Green: "Idle" Wake word enabled.
