@@ -641,7 +641,6 @@ script:
                 green: 0.0
                 blue: 0.8
                 effect: adr_thinking_effect
-                #effect: thinking_effect # for non-adressable led-strip
       - if:
           condition:
             - text_sensor.state:
@@ -656,7 +655,6 @@ script:
                 green: 1.0
                 blue: 0.0
                 effect: adr_replying_effect
-                #effect: replying_effect # for non-adressable led-strip
       - if:
           condition:
             - text_sensor.state:
