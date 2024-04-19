@@ -16,6 +16,7 @@ substitutions:
   name: esphome-voice-satellite
   friendly_name: 'Voice Satellite'
   led_pwr_factor: '0.3' # My LED-strip draws too much power.
+  led_num: '35' # Number of LEDs
   error_phase: 'Error'
   idle_phase: 'Idle'
   listening_phase: 'Listening'
@@ -52,7 +53,15 @@ globals:
     type: float
     restore_value: false
     initial_value: '0'
-  - id: 'config_led_range'
+  - id: 'config_range_color'
+    type: int
+    restore_value: false
+    initial_value: '0'
+  - id: 'config_range_white'
+    type: int
+    restore_value: false
+    initial_value: '0'
+  - id: 'config_range_black'
     type: int
     restore_value: false
     initial_value: '0'
@@ -210,7 +219,7 @@ light:
     rmt_channel: 0
     rgb_order: GRB
     pin: GPIO4
-    num_leds: '35'
+    num_leds: ${led_num}
     chipset: WS2812
     #max_refresh_rate: 
     default_transition_length: 0s
@@ -737,32 +746,32 @@ script:
       - light.addressable_set:
           id: led
           range_from: 0
-          range_to: 6
+          range_to: !lambda "return id(config_range_color) - 1;"
           red: !lambda "return id(config_led_red);"
           green: !lambda "return id(config_led_green);"
           blue: !lambda "return id(config_led_blue);"
       - light.addressable_set:
           id: led
-          range_from: 7
-          range_to: !lambda "return id(config_led_range);"
+          range_from: !lambda "return id(config_range_color);"
+          range_to: !lambda "return id(config_range_color) + id(config_range_white);"
           red: 1
           green: 1
           blue: 1
       - if: 
           condition:
-            lambda: "return 1+id(config_led_range) < 27;"
+            lambda: "return 1 + id(config_range_white) < ${led_num} - id(config_range_color) - 1;"
           then:
           - light.addressable_set:
               id: led
-              range_from: !lambda "return 1+id(config_led_range);"
-              range_to: 27
+              range_from: !lambda "return 1 + id(config_range_color) + id(config_range_white);"
+              range_to: !lambda "return ${led_num} - id(config_range_color) - 1;"
               red: 0
               green: 0
               blue: 0
       - light.addressable_set:
           id: led
-          range_from: 28
-          range_to: 34
+          range_from: !lambda "return ${led_num} - id(config_range_color);"
+          range_to: !lambda "return ${led_num} - 1;"
           red: !lambda "return id(config_led_red);"
           green: !lambda "return id(config_led_green);"
           blue: !lambda "return id(config_led_blue);"
@@ -772,15 +781,19 @@ script:
     then:
       - script.execute: config_timeout_timer
       - lambda: |-
+          id(config_range_color) = ${led_num}/5;
+          if( id(config_range_color) < 1) id(config_range_color)=1;
+          static float w = ${led_num} - (id(config_range_color) * 2);
+          if( w < 1 ) w=1;
           switch(id(config_selected)) {
           case ${config_volume}:
-          id(config_led_range) = (int)(7+(id(speaker_volume).state/5));
+          id(config_range_white) = (int)( id(speaker_volume).state/round(100/w) );
           id(config_led_red) = 0;
           id(config_led_green) = 0;
           id(config_led_blue) = 1;
           break;
           case ${config_brightness}:
-          id(config_led_range) = (int)(7+(id(led_brightness).state/5));
+          id(config_range_white) = (int)( id(led_brightness).state/round(100/w) );
           id(config_led_red) = 1;
           id(config_led_green) = 1;
           id(config_led_blue) = 0;
