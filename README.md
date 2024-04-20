@@ -30,7 +30,7 @@ I added an addressable LED-strip around it for state feedback. And made some cus
 
 State is also exposed in Home Assistant. So automations can be activated by it.
 
-Non-addressable and single LED could be used too. I have tried to add the option 'led_addressable' in the code. But I don't have a setup to test it. And I expect that some of the code would have to be deleted to not throw errors during compilation. Like 'addressable_lambda'.
+Non-addressable and single LED could be used too. I have added the option 'led_addressable' in the code. But I don't have a setup to test it. And I expect that some of the code would have to be deleted to not throw errors during compilation. Like 'addressable_lambda'.
 
 My LED-Strip is a 35 LED (144 / m) RGBW. I do not use the White channel. The LED effects will scale with the number of LEDs. Though I will recommend at least 10 LEDs.
 
