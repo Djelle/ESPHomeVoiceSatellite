@@ -20,7 +20,6 @@ I used a cheap (and faulty) bluetooth speaker for this project. Which happened t
 ## LED-strip
 I added an addressable LED-strip around it for state feedback. And made some custom light effects that can support my LED-brightness setting.
 
-Non-addressable and single LED could be used too. Though you would have to delete 'adr_' from two of the states (Search for 'effect: adr_' in the code). And also remove the scripts 'config_set_led' and 'config_led_set_vars', and the references to them.
 - White: "Not Ready" Not connected to HA.
 - Orange: "Muted" Wake word disabled.
 - Green: "Idle" Wake word enabled.
@@ -31,7 +30,9 @@ Non-addressable and single LED could be used too. Though you would have to delet
 
 State is also exposed in Home Assistant. So automations can be activated by it.
 
-My LED-Strip is RGBW. I do not use the White channel though.
+Non-addressable and single LED could be used too. Though you would have to delete 'adr_' from two of the states (Search for 'effect: adr_' in the code). And also remove the scripts 'config_set_led' and 'config_led_set_vars', and the references to them.
+
+My LED-Strip is a 35 LED (144 / m) RGBW. I do not use the White channel. The LED effects will scale with the number of LEDs. Though I will recommend at least 10 LEDs.
 
 ## Future
 
