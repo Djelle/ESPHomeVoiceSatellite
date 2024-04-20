@@ -15,7 +15,8 @@
 substitutions:
   name: esphome-voice-satellite
   friendly_name: 'Voice Satellite'
-  led_pwr_factor: '0.3' # My LED-strip draws too much power.
+  led_pwr_factor: '0.3' # 0 - 1 (My LED-strip draws too much power.)
+  led_addressable: 'true' # true / false.
   led_num: '35' # Number of LEDs
   error_phase: 'Error'
   idle_phase: 'Idle'
@@ -211,7 +212,8 @@ speaker: # MAX98357A
     mode: mono
 
 light:
-  - platform: esp32_rmt_led_strip
+  - platform: esp32_rmt_led_strip  # Change to used type of LED-strip.
+    chipset: WS2812                # Change to used chip on LED-strip.
     name: "Status LED"
     id: led
     icon: 'mdi:alarm-light'
@@ -220,7 +222,6 @@ light:
     rgb_order: GRB
     pin: GPIO4
     num_leds: ${led_num}
-    chipset: WS2812
     #max_refresh_rate: 
     default_transition_length: 0s
     effects:
@@ -567,6 +568,10 @@ binary_sensor:
   filters:
     - delayed_on: 10ms
   on_press:
+#    - text_sensor.template.publish: #=============================================================================== TEST ===
+#        id: va_state
+#        state: "${replying_phase}"
+#  on_click: 
     - if:
         condition:
           - voice_assistant.is_running
@@ -642,28 +647,54 @@ script:
                 id: va_state
                 state: "${thinking_phase}"
           then:
-            - light.control:
-                id: led
-                color_mode: RGB
-                brightness: !lambda "return(id(led_brightness_pf));"
-                red: 1.0
-                green: 0.0
-                blue: 0.8
-                effect: adr_thinking_effect
+            - if:
+                condition:
+                  lambda: "return ${led_addressable};"
+                then:
+                  - light.control:
+                      id: led
+                      color_mode: RGB
+                      brightness: !lambda "return(id(led_brightness_pf));"
+                      red: 1.0
+                      green: 0.0
+                      blue: 0.8
+                      effect: adr_thinking_effect
+                else:
+                  - light.control:
+                      id: led
+                      color_mode: RGB
+                      brightness: !lambda "return(id(led_brightness_pf));"
+                      red: 1.0
+                      green: 0.0
+                      blue: 0.8
+                      effect: thinking_effect
       - if:
           condition:
             - text_sensor.state:
                 id: va_state
                 state: "${replying_phase}"
           then:
-            - light.control:
-                id: led
-                color_mode: RGB
-                brightness: !lambda "return(id(led_brightness_pf));"
-                red: 1.0
-                green: 1.0
-                blue: 0.0
-                effect: adr_replying_effect
+            - if:
+                condition:
+                  lambda: "return ${led_addressable};"
+                then:
+                  - light.control:
+                      id: led
+                      color_mode: RGB
+                      brightness: !lambda "return(id(led_brightness_pf));"
+                      red: 1.0
+                      green: 1.0
+                      blue: 0.0
+                      effect: adr_replying_effect
+                else:
+                  - light.control:
+                      id: led
+                      color_mode: RGB
+                      brightness: !lambda "return(id(led_brightness_pf));"
+                      red: 1.0
+                      green: 1.0
+                      blue: 0.0
+                      effect: replying_effect
       - if:
           condition:
             - text_sensor.state:
@@ -737,44 +768,57 @@ script:
 
   - id: config_set_led
     then:
-      - light.control:
-          id: led
-          color_mode: RGB
-          brightness: !lambda "return(id(led_brightness_pf));"
-          effect: none
       - script.execute: config_led_set_vars
-      - light.addressable_set:
-          id: led
-          range_from: 0
-          range_to: !lambda "return id(config_range_color) - 1;"
-          red: !lambda "return id(config_led_red);"
-          green: !lambda "return id(config_led_green);"
-          blue: !lambda "return id(config_led_blue);"
-      - light.addressable_set:
-          id: led
-          range_from: !lambda "return id(config_range_color);"
-          range_to: !lambda "return id(config_range_color) + id(config_range_white);"
-          red: 1
-          green: 1
-          blue: 1
-      - if: 
+      - if:
           condition:
-            lambda: "return 1 + id(config_range_white) < ${led_num} - id(config_range_color) - 1;"
+            lambda: "return ${led_addressable};"
           then:
-          - light.addressable_set:
-              id: led
-              range_from: !lambda "return 1 + id(config_range_color) + id(config_range_white);"
-              range_to: !lambda "return ${led_num} - id(config_range_color) - 1;"
-              red: 0
-              green: 0
-              blue: 0
-      - light.addressable_set:
-          id: led
-          range_from: !lambda "return ${led_num} - id(config_range_color);"
-          range_to: !lambda "return ${led_num} - 1;"
-          red: !lambda "return id(config_led_red);"
-          green: !lambda "return id(config_led_green);"
-          blue: !lambda "return id(config_led_blue);"
+            - light.control:
+                id: led
+                color_mode: RGB
+                brightness: !lambda "return(id(led_brightness_pf));"
+                effect: none
+            - light.addressable_set:
+                id: led
+                range_from: 0
+                range_to: !lambda "return id(config_range_color) - 1;"
+                red: !lambda "return id(config_led_red);"
+                green: !lambda "return id(config_led_green);"
+                blue: !lambda "return id(config_led_blue);"
+            - light.addressable_set:
+                id: led
+                range_from: !lambda "return id(config_range_color);"
+                range_to: !lambda "return id(config_range_color) + id(config_range_white);"
+                red: 1
+                green: 1
+                blue: 1
+            - if: 
+                condition:
+                  lambda: "return 1 + id(config_range_white) < ${led_num} - id(config_range_color) - 1;"
+                then:
+                - light.addressable_set:
+                    id: led
+                    range_from: !lambda "return 1 + id(config_range_color) + id(config_range_white);"
+                    range_to: !lambda "return ${led_num} - id(config_range_color) - 1;"
+                    red: 0
+                    green: 0
+                    blue: 0
+            - light.addressable_set:
+                id: led
+                range_from: !lambda "return ${led_num} - id(config_range_color);"
+                range_to: !lambda "return ${led_num} - 1;"
+                red: !lambda "return id(config_led_red);"
+                green: !lambda "return id(config_led_green);"
+                blue: !lambda "return id(config_led_blue);"
+          else:
+            - light.control:
+                id: led
+                color_mode: RGB
+                brightness: !lambda "return(id(led_brightness_pf));"
+                red: !lambda "return id(config_led_red);"
+                green: !lambda "return id(config_led_green);"
+                blue: !lambda "return id(config_led_blue);"
+                effect: none
 
 
   - id: config_led_set_vars
