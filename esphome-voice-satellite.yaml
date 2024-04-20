@@ -568,10 +568,6 @@ binary_sensor:
   filters:
     - delayed_on: 10ms
   on_press:
-#    - text_sensor.template.publish: #=============================================================================== TEST ===
-#        id: va_state
-#        state: "${replying_phase}"
-#  on_click: 
     - if:
         condition:
           - voice_assistant.is_running
